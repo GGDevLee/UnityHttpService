@@ -12,7 +12,7 @@
 ```json
 {
   "dependencies": {
-	"com.leeframework.httpservice":"https://e.coding.net/ggdevlee/leeframework/HttpService.git#1.0.1"
+	"com.leeframework.httpservice":"https://e.coding.net/ggdevlee/leeframework/HttpService.git#1.0.3"
   }
 }
 ```
@@ -54,21 +54,22 @@ HttpSvc.instance.Post("http:", (cb) =>
 
 ```
 
-- DownloadTexture
+- DownloadFile
 
 ```csharp
 
-HttpSvc.instance.DownloadTexture("http:", (cb) =>
+HttpSvc.instance.DownloadFile("https:", (value) =>
 {
-	HttpTextureCb textureCb = cb as HttpTextureCb;
+    HttpFileCb fileCb = value;
 
-	if (textureCb.isError)
-	{
-		Debug.Log(textureCb.errorMsg);
-		return;
-	}
-	//Todo
-	//textureCb.texture
+    if (!fileCb.isError)
+    {
+        File.WriteAllBytes(Application.dataPath + "/../aaa.png", fileCb.data);
+    }
+    else
+    {
+        Debug.LogError(fileCb.errorMsg);
+    }
 });
 
 ```
@@ -77,17 +78,18 @@ HttpSvc.instance.DownloadTexture("http:", (cb) =>
 
 ```csharp
 
-HttpSvc.instance.DownloadSprite("http:", (cb) =>
- {
-	 HttpSpriteCb spriteCb = cb as HttpSpriteCb;
-
-	 if (spriteCb.isError)
-	 {
-		 Debug.Log(spriteCb.errorMsg);
-		 return;
-	 }
-	//Todo
-	//spriteCb.sprite
- });
+HttpSvc.instance.DownloadSprite("https:", (value) =>
+{
+     HttpSpriteCb spriteCb = value;
+    
+     if (!spriteCb.isError)
+     {
+         img.sprite = spriteCb.sprite;
+     }
+     else
+     {
+         Debug.LogError(spriteCb.errorMsg);
+     }
+});
 
 ```

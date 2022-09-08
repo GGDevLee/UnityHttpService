@@ -8,8 +8,12 @@ namespace LeeFramework.Http
 
         public void Post(string url, Action<HttpCb> callback, string key, string json);
 
-        public void DownloadTexture(string url, Action<HttpCbBase> cb);
+        public DownloadFileItem DownloadFile(string url, Action<HttpFileCb> cb);
 
-        public void DownloadSprite(string url, Action<HttpCbBase> cb);
+        public DownloadSpriteItem DownloadSprite(string url, Action<HttpSpriteCb> cb);
+
+        public DownloadFileItem GetDownloadFileItem(string url);
+
+        public DownloadSpriteItem GetDownloadSpriteItem(string url);
     }
 }

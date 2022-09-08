@@ -26,15 +26,12 @@ namespace LeeFramework.Http
         public string json;
     }
 
-    /// <summary>
-    /// 下载图片回调
-    /// </summary>
-    public class HttpTextureCb : HttpCbBase
+    public class HttpFileCb : HttpCbBase
     {
         /// <summary>
-        /// 返回Texture
+        /// 文件
         /// </summary>
-        public Texture texture;
+        public byte[] data;
     }
 
     /// <summary>
@@ -43,21 +40,14 @@ namespace LeeFramework.Http
     public class HttpSpriteCb : HttpCbBase
     {
         /// <summary>
-        /// 返回Image
-        /// </summary>
-        public Sprite sprite;
-    }
-
-
-    /// <summary>
-    /// 下载图片回调
-    /// </summary>
-    public class HttpTexture2DCb : HttpCbBase
-    {
-        /// <summary>
         /// 返回Texture
         /// </summary>
-        public Texture2D texture;
+        public Texture texture;
+
+        /// <summary>
+        /// 返回Sprite
+        /// </summary>
+        public Sprite sprite;
     }
 
 }

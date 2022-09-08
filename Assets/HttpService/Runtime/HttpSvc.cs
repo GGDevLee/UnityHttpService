@@ -8,7 +8,7 @@ namespace LeeFramework.Http
 {
     public class HttpSvc : HttpBase<HttpSvc>, IHttp
     {
-        private Dictionary<string, Action<HttpCb>> _CallBackDict = new Dictionary<string, Action<HttpCb>>();
+        private Dictionary<string, Action<HttpCb>> _CallbackDict = new Dictionary<string, Action<HttpCb>>();
         private DownloadMgr _DownloadMgr = new DownloadMgr();
 
 
@@ -19,7 +19,7 @@ namespace LeeFramework.Http
         {
             if (callback != null)
             {
-                _CallBackDict.Add(url, callback);
+                _CallbackDict.Add(url, callback);
             }
             GetUrl(url);
         }
@@ -31,27 +31,36 @@ namespace LeeFramework.Http
         {
             if (callback != null)
             {
-                _CallBackDict.Add(url, callback);
+                _CallbackDict.Add(url, callback);
             }
             PostUrl(url, key, json);
         }
 
         /// <summary>
-        /// 下载图片 使用HttpTextureCb
+        /// 下载文件
         /// </summary>
-        public void DownloadTexture(string url, Action<HttpCbBase> cb)
+        public DownloadFileItem DownloadFile(string url, Action<HttpFileCb> cb)
         {
-            _DownloadMgr.DownloadTexture(url, cb);
+            return _DownloadMgr.DownloadFile(url, cb);
+        }
+
+        public DownloadFileItem GetDownloadFileItem(string url)
+        {
+            return _DownloadMgr.GetDownloadFileItem(url);
         }
 
         /// <summary>
-        /// 下载Sprite 使用HttpSpriteCb
+        /// 下载图片
         /// </summary>
-        public void DownloadSprite(string url, Action<HttpCbBase> cb)
+        public DownloadSpriteItem DownloadSprite(string url, Action<HttpSpriteCb> cb)
         {
-            _DownloadMgr.DownloadImg(url, cb);
+            return _DownloadMgr.DownloadSprite(url, cb);
         }
 
+        public DownloadSpriteItem GetDownloadSpriteItem(string url)
+        {
+            return _DownloadMgr.GetDownloadSpriteItem(url);
+        }
 
         #region Get 和 Post请求
         private void GetUrl(string url)
@@ -72,9 +81,9 @@ namespace LeeFramework.Http
                 httpCb.isError = true;
                 httpCb.errorMsg = request.error;
                 httpCb.json = string.Empty;
-                if (_CallBackDict.ContainsKey(request.url))
+                if (_CallbackDict.ContainsKey(request.url))
                 {
-                    _CallBackDict[request.url]?.Invoke(httpCb);
+                    _CallbackDict[request.url]?.Invoke(httpCb);
                 }
             }
             else
@@ -91,10 +100,10 @@ namespace LeeFramework.Http
                     httpCb.errorMsg = string.Empty;
                     httpCb.json = request.downloadHandler.text;
                 }
-                if (_CallBackDict.ContainsKey(request.url))
+                if (_CallbackDict.ContainsKey(request.url))
                 {
-                    _CallBackDict[request.url]?.Invoke(httpCb);
-                    _CallBackDict.Remove(request.url);
+                    _CallbackDict[request.url]?.Invoke(httpCb);
+                    _CallbackDict.Remove(request.url);
                 }
             }
         }
@@ -119,9 +128,9 @@ namespace LeeFramework.Http
                 httpCb.isError = true;
                 httpCb.errorMsg = request.error;
                 httpCb.json = string.Empty;
-                if (_CallBackDict.ContainsKey(request.url))
+                if (_CallbackDict.ContainsKey(request.url))
                 {
-                    _CallBackDict[request.url]?.Invoke(httpCb);
+                    _CallbackDict[request.url]?.Invoke(httpCb);
                 }
             }
             else
@@ -138,10 +147,10 @@ namespace LeeFramework.Http
                     httpCb.errorMsg = string.Empty;
                     httpCb.json = request.downloadHandler.text;
                 }
-                if (_CallBackDict.ContainsKey(request.url))
+                if (_CallbackDict.ContainsKey(request.url))
                 {
-                    _CallBackDict[request.url]?.Invoke(httpCb);
-                    _CallBackDict.Remove(request.url);
+                    _CallbackDict[request.url]?.Invoke(httpCb);
+                    _CallbackDict.Remove(request.url);
                 }
             }
         }
