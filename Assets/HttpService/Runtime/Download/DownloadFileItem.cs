@@ -12,9 +12,6 @@ namespace LeeFramework.Http
         private List<Action<HttpFileCb>> _AllCb = new List<Action<HttpFileCb>>();
 
 
-
-
-
         public DownloadFileItem(string url, UnityWebRequest request, Action<HttpFileCb> callback) : base(url, request)
         {
             _AllCb.Add(callback);
@@ -68,6 +65,7 @@ namespace LeeFramework.Http
                     item?.Invoke(cb);
                 }
             }
+            onFinish?.Invoke(_Url);
         }
 
         public override void Dispose()

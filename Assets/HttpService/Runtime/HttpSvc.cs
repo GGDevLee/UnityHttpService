@@ -44,10 +44,22 @@ namespace LeeFramework.Http
             return _DownloadMgr.DownloadFile(url, cb);
         }
 
+        /// <summary>
+        /// 返回下载任务
+        /// </summary>
         public DownloadFileItem GetDownloadFileItem(string url)
         {
             return _DownloadMgr.GetDownloadFileItem(url);
         }
+
+        /// <summary>
+        /// 创建下载文件任务
+        /// </summary>
+        public DownloadFileItem DownloadFailTask(string url, Action<HttpFileCb> cb)
+        {
+            return _DownloadMgr.DownloadFileTask(url, cb);
+        }
+
 
         /// <summary>
         /// 下载图片
@@ -57,9 +69,20 @@ namespace LeeFramework.Http
             return _DownloadMgr.DownloadSprite(url, cb);
         }
 
+        /// <summary>
+        /// 返回下载任务
+        /// </summary>
         public DownloadSpriteItem GetDownloadSpriteItem(string url)
         {
             return _DownloadMgr.GetDownloadSpriteItem(url);
+        }
+
+        /// <summary>
+        /// 创建下载图片任务
+        /// </summary>
+        public DownloadSpriteItem DownloadSpriteTask(string url, Action<HttpSpriteCb> cb)
+        {
+            return _DownloadMgr.DownloadSpriteTask(url, cb);
         }
 
         #region Get 和 Post请求

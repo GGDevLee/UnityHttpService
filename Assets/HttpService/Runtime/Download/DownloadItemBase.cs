@@ -5,11 +5,14 @@ namespace LeeFramework.Http
 {
     public abstract class DownloadItemBase : IDisposable
     {
+        public static Action<string> onFinish = null;
+
         public UnityWebRequest request => _Request;
         public string url => _Url;
         public int timeout => _Timeout;
         public bool isDownloading => _IsDownloading;
         public bool isDownloaded => _IsDownloaded;
+
 
 
         protected UnityWebRequest _Request;
@@ -49,6 +52,8 @@ namespace LeeFramework.Http
             }
             return 0;
         }
+
+
 
 
         public abstract void StartDownload();
