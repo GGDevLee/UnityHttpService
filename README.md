@@ -4,7 +4,7 @@
 
 ### ============HttpService介绍============
 #### 基于UnityWebRequest的基础上，封装了多个Http的异步接口
-#### 使得可以非常方便的使用Get,Post，DownloadTexture，DownloadSprite
+#### 使得可以非常方便的使用Get，Post，DownloadFile，DownloadSprite
 #### 觉得我的插件能帮助到你，麻烦帮我点个Star支持一下❤️
 
 ### =================使用方法=================
@@ -12,7 +12,7 @@
 ```json
 {
   "dependencies": {
-	"com.leeframework.httpservice":"https://e.coding.net/ggdevlee/leeframework/HttpService.git#1.0.3"
+	"com.leeframework.httpservice":"https://e.coding.net/ggdevlee/leeframework/HttpService.git#1.0.4"
   }
 }
 ```
@@ -91,5 +91,53 @@ HttpSvc.instance.DownloadSprite("https:", (value) =>
          Debug.LogError(spriteCb.errorMsg);
      }
 });
+
+```
+
+- 创建文件下载任务
+
+```csharp
+
+DownloadFileItem item = HttpSvc.instance.DownloadFailTask("https://", (value) =>
+{
+    HttpFileCb fileCb = value;
+    
+    if (!fileCb.isError)
+    {
+      File.WriteAllBytes(Application.dataPath + "/../aaa.png", fileCb.data);
+    }
+    else
+    {
+      Debug.LogError(fileCb.errorMsg);
+    }
+});
+
+//item Todo
+
+item.StartDownload();
+
+```
+
+- 创建图片下载任务
+
+```csharp
+
+DownloadSpriteItem sprite = HttpSvc.instance.DownloadSpriteTask("https://", (value) =>
+{
+    HttpSpriteCb spriteCb = value;
+
+    if (!spriteCb.isError)
+    {
+        img.sprite = spriteCb.sprite;
+    }
+    else
+    {
+        Debug.LogError(spriteCb.errorMsg);
+    }
+});
+
+//item Todo
+
+sprite.StartDownload();
 
 ```
